@@ -1,14 +1,18 @@
 def stock_picker(input)
   output = Array.new()
   buy = 0
-  sell = 0
+  sell = 1
 
   input_length = input.length
-  input.each do |num1|
-    input.each do |num2|
-      if num2-num1 > sell-buy
-        num2 = sell
-        num1 = buy
+  input.each_with_index do |num1, index1|
+    input.each_with_index do |num2, index2|
+      if index2>index1
+        compA = input[index2]-input[index1]
+        compB = input[sell]-input[buy]
+        if compA > compB
+          buy = index1
+          sell = index2
+        end
       end
     end
   end
@@ -17,8 +21,7 @@ def stock_picker(input)
   p output
 end
 
-stock_picker("hi")
-# stock_picker([17,3,6,9,15,8,6,1,10])
+stock_picker([17,3,6,9,15,8,6,1,10])
 # 
 # EXPECTED OUTPUT:
 #  => [1,4]  # for a profit of $15 - $3 == $12
